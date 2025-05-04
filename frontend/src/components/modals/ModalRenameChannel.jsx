@@ -90,7 +90,7 @@ const ModalRenameChannel = () => {
               ref={inputRef}
             />
             <Form.Label htmlFor='name' className='visually-hidden'>
-              Имя канала
+              Управление каналом
             </Form.Label>
 
             <div className='invalid-feedback'>{formik.errors.name}</div>
