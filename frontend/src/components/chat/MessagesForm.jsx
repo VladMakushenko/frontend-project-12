@@ -64,6 +64,7 @@ const MessagesForm = () => {
           name='body'
           placeholder='Введите сообщение...'
           className='border-0 p-0 ps-2'
+          aria-label='Новое сообщение'
           required
           isInvalid={formik.touched.body && formik.errors.body}
           value={formik.values.body}
