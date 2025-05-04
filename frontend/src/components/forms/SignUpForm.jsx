@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, FloatingLabel } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -17,6 +18,7 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputRef = useRef();
+  const { t } = useTranslation();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -58,7 +60,7 @@ const SignUpForm = () => {
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <h1 className='text-center mb-4'>Регистрация</h1>
+      <h1 className='text-center mb-4'>{t('Signup')}</h1>
 
       <FloatingLabel className='mb-3'>
         <Form.Control

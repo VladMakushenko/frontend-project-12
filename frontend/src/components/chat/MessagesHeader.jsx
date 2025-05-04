@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { channelsApi } from '../../api/channelsApi';
 import { messagesApi } from '../../api/messagesApi';
 
 const MessagesHeader = () => {
-  const [channel, setChannel] = useState('');
-  const [messagesCount, setMessagesCount] = useState(0);
-
   const { currentChannelId } = useSelector((state) => state.ui);
 
   const getChannels = channelsApi.endpoints.getChannels.select();
@@ -19,10 +15,8 @@ const MessagesHeader = () => {
   const currentChannel = channels?.find((channel) => channel.id == currentChannelId);
   const currentChannelMessages = messages?.filter((message) => message.channelId == currentChannelId);
 
-  useEffect(() => {
-    setChannel(currentChannel?.name ?? 'general');
-    setMessagesCount(currentChannelMessages?.length || 0);
-  }, [channels, messages, currentChannelId]);
+  const channel = currentChannel?.name || 'general';
+  const messagesCount = currentChannelMessages?.length || 0;
 
   return (
     <div className='bg-light mb-4 p-3 shadow-sm small'>
