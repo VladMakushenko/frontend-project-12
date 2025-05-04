@@ -44,7 +44,7 @@ const Channel = ({ channel }) => {
       <Dropdown as={ButtonGroup} className='d-flex'>
         <ButtonTemplate />
         <Dropdown.Toggle variant={id == currentChannelId ? 'secondary' : ''} className='flex-grow-0 dropdown-toggle-split'>
-          <span className='visually-hidden'>{'channelControl'}</span>
+          <span className='visually-hidden'>Управление каналом</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
