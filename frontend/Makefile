@@ -11,4 +11,4 @@ dev:
 	npm run dev
 
 lint:
-	npx eslint --no-config-lookup --config eslint.config.js .
+	npx eslint .
