@@ -1,5 +1,5 @@
 const rollbarConfig = {
-  accessToken: 'fad1a7f45185484b99d2fd25bac913d0',
+  accessToken: '9bafe15ffe9d4c0887d06276f3ff525f',
   environment: 'production',
 };
 
