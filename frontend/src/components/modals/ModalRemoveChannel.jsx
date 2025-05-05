@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import { setCurrentChannel, setModalType, setModalVisibility } from '../../slices/uiSlice';
 import { useRemoveChannelMutation } from '../../api/channelsApi';
@@ -7,6 +8,7 @@ import { useRemoveChannelMutation } from '../../api/channelsApi';
 import { toastSuccess, toastError } from '../../toastify';
 
 const ModalRemoveChannel = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { channelId } = useSelector((state) => state.ui.modal.extra);
 
@@ -16,10 +18,10 @@ const ModalRemoveChannel = () => {
     try {
       await removeChannel(channelId).unwrap();
       dispatch(setCurrentChannel(1));
-      toastSuccess('Канал удалён');
+      toastSuccess(t('toastify.ChannelHasBeenRemoved'));
       handleClose();
     } catch (e) {
-      toastError('Ошибка при попытке удалить канал');
+      toastError(t('NetworkError'));
       throw e;
     }
   };
@@ -32,18 +34,18 @@ const ModalRemoveChannel = () => {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('modals.RemoveChannel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <p className='lead'>Уверены?</p>
+        <p className='lead'>{t('modals.AreYouSure')}</p>
 
         <div className='d-flex justify-content-end'>
           <Button variant='secondary' className='me-2' type='button' onClick={handleClose}>
-            Отменить
+            {t('modals.Cancel')}
           </Button>
           <Button variant='danger' type='submit' onClick={handleRemoveChannel}>
-            Удалить
+            {t('modals.Remove')}
           </Button>
         </div>
       </Modal.Body>

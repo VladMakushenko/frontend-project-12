@@ -25,9 +25,9 @@ const SignUpForm = () => {
   }, []);
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Обязательное поле').min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов'),
-    password: Yup.string().required('Обязательное поле').min(6, 'Не менее 6 символов'),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
+    username: Yup.string().required(t('forms.Required')).min(3, t('forms.MinMaxUsernameLength')).max(20, t('forms.MinMaxUsernameLength')),
+    password: Yup.string().required(t('forms.Required')).min(6, t('forms.MinPasswordLength')),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], t('forms.PasswordsMustMatch')),
   });
 
   const formik = useFormik({
@@ -48,11 +48,11 @@ const SignUpForm = () => {
         navigate('/');
       } catch (e) {
         if (e.status === 409) {
-          setAuthError('Такой пользователь уже существует');
+          setAuthError(t('forms.UserAlreadyExists'));
           return;
         }
 
-        toastError('Ошибка соединения');
+        toastError(t('NetworkError'));
         throw e;
       }
     },
@@ -60,14 +60,14 @@ const SignUpForm = () => {
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <h1 className='text-center mb-4'>{t('Signup')}</h1>
+      <h1 className='text-center mb-4'>{t('SignUp')}</h1>
 
       <FloatingLabel className='mb-3'>
         <Form.Control
           type='text'
           name='username'
           id='username'
-          placeholder='От 3 до 20 символов'
+          placeholder={t('forms.MinMaxUsernameLength')}
           required
           isInvalid={(formik.errors.username && formik.touched.username) || authError}
           value={formik.values.username}
@@ -75,7 +75,7 @@ const SignUpForm = () => {
           onChange={formik.handleChange}
           ref={inputRef}
         />
-        <Form.Label htmlFor='username'>Имя пользователя</Form.Label>
+        <Form.Label htmlFor='username'>{t('forms.Username')}</Form.Label>
 
         {formik.errors.username ? <div className='invalid-tooltip'>{formik.errors.username}</div> : null}
       </FloatingLabel>
@@ -85,14 +85,14 @@ const SignUpForm = () => {
           type='password'
           name='password'
           id='password'
-          placeholder='Не менее 6 символов'
+          placeholder={t('forms.MinPasswordLength')}
           required
           isInvalid={(formik.errors.password && formik.touched.password) || authError}
           value={formik.values.password}
           disabled={formik.isSubmitting}
           onChange={formik.handleChange}
         />
-        <Form.Label htmlFor='password'>Пароль</Form.Label>
+        <Form.Label htmlFor='password'>{t('forms.Password')}</Form.Label>
 
         {formik.errors.password ? <div className='invalid-tooltip'>{formik.errors.password}</div> : null}
       </FloatingLabel>
@@ -102,21 +102,21 @@ const SignUpForm = () => {
           type='password'
           name='confirmPassword'
           id='confirmPassword'
-          placeholder='Пароли должны совпадать'
+          placeholder={t('forms.PasswordsMustMatch')}
           required
           isInvalid={(formik.errors.confirmPassword && formik.touched.confirmPassword) || authError}
           value={formik.values.confirmPassword}
           disabled={formik.isSubmitting}
           onChange={formik.handleChange}
         />
-        <Form.Label htmlFor='confirmPassword'>Подтвердите пароль</Form.Label>
+        <Form.Label htmlFor='confirmPassword'>{t('forms.ConfirmPassword')}</Form.Label>
 
         {formik.errors.confirmPassword ? <div className='invalid-tooltip'>{formik.errors.confirmPassword}</div> : null}
         {authError ? <div className='invalid-tooltip'>{authError}</div> : null}
       </FloatingLabel>
 
       <Button type='submit' variant='outline-primary' className='w-100' disabled={formik.isSubmitting}>
-        Зарегистрироваться
+        {t('ToSignUp')}
       </Button>
     </Form>
   );

@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { channelsApi } from '../../api/channelsApi';
 import { messagesApi } from '../../api/messagesApi';
 
 const MessagesHeader = () => {
+  const { t } = useTranslation();
+
   const { currentChannelId } = useSelector((state) => state.ui);
 
   const getChannels = channelsApi.endpoints.getChannels.select();
@@ -24,7 +27,7 @@ const MessagesHeader = () => {
         <b># {channel}</b>
       </p>
 
-      <span className='text-muted'>{messagesCount} сообщений</span>
+      <span className='text-muted'>{t('messages.Messages', { count: messagesCount })}</span>
     </div>
   );
 };

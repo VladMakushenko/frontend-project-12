@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Nav, Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import { setCurrentChannel, setModalType, setModalVisibility, setModalExtraParams } from '../../slices/uiSlice';
 
 const Channel = ({ channel }) => {
   const { id, name, removable } = channel;
 
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const { currentChannelId } = useSelector((state) => state.ui);
@@ -44,11 +46,11 @@ const Channel = ({ channel }) => {
       <Dropdown as={ButtonGroup} className='d-flex'>
         <ButtonTemplate />
         <Dropdown.Toggle variant={id == currentChannelId ? 'secondary' : ''} className='flex-grow-0 dropdown-toggle-split'>
-          <span className='visually-hidden'>Управление каналом</span>
+          <span className='visually-hidden'>{t('channels.ManageChannel')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
-          <Dropdown.Item onClick={handleRenameChannel}>Переименовать</Dropdown.Item>
+          <Dropdown.Item onClick={handleRemoveChannel}>{t('channels.RemoveChannel')}</Dropdown.Item>
+          <Dropdown.Item onClick={handleRenameChannel}>{t('channels.RenameChannel')}</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     );

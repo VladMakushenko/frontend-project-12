@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import filter from 'leo-profanity';
 import * as Yup from 'yup';
@@ -15,13 +16,14 @@ import LocalStorage from '../../services/LocalStorage';
 
 const MessagesForm = () => {
   const inputRef = useRef();
+  const { t } = useTranslation();
 
   const { currentChannelId } = useSelector((state) => state.ui);
 
   const [addMessage] = useAddMessageMutation();
 
   const validationSchema = Yup.object().shape({
-    body: Yup.string().required('Обязательное поле'),
+    body: Yup.string().required(t('forms.Required')),
   });
 
   const formik = useFormik({
@@ -46,7 +48,7 @@ const MessagesForm = () => {
       inputRef.current.focus();
       formik.values.body = '';
     } catch (e) {
-      toastError('Ошибка при попытке отправить сообщение');
+      toastError(t('NetworkError'));
       throw e;
     }
   };
@@ -62,9 +64,9 @@ const MessagesForm = () => {
           type='text'
           id='body'
           name='body'
-          placeholder='Введите сообщение...'
+          placeholder={t('messages.TypeMessage')}
           className='border-0 p-0 ps-2'
-          aria-label='Новое сообщение'
+          aria-label={t('messages.NewMessage')}
           required
           isInvalid={formik.touched.body && formik.errors.body}
           value={formik.values.body}
@@ -75,7 +77,7 @@ const MessagesForm = () => {
 
         <Button type='submit' variant='group-vertical' disabled={formik.isSubmitting || !formik.values.body.length} onClick={formik.handleSubmit}>
           <ArrowRightSquare size={20} />
-          <span className='visually-hidden'>Отправить</span>
+          <span className='visually-hidden'>{t('messages.SendMessage')}</span>
         </Button>
       </Form.Group>
     </Form>

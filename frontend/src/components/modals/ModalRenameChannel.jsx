@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import filter from 'leo-profanity';
 import * as Yup from 'yup';
@@ -12,6 +13,7 @@ import { channelsApi, useEditChannelMutation } from '../../api/channelsApi';
 import { toastSuccess, toastError } from '../../toastify';
 
 const ModalRenameChannel = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -27,10 +29,10 @@ const ModalRenameChannel = () => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .required('Обязательное поле')
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .notOneOf(channelsNames, 'Должно быть уникальным'),
+      .required(t('forms.Required'))
+      .min(3, t('forms.MinMaxUsernameLength'))
+      .max(20, t('forms.MinMaxUsernameLength'))
+      .notOneOf(channelsNames, t('forms.MustBeUnique')),
   });
 
   const formik = useFormik({
@@ -51,10 +53,10 @@ const ModalRenameChannel = () => {
   const handleRenameChannel = async (data) => {
     try {
       await editChannel(data).unwrap();
-      toastSuccess('Канал переименован');
+      toastSuccess(t('toastify.ChannelHasBeenRenamed'));
       handleClose();
     } catch (e) {
-      toastError('Ошибка при попытке переименовать канал');
+      toastError(t('NetworkError'));
       throw e;
     }
   };
@@ -71,7 +73,7 @@ const ModalRenameChannel = () => {
   return (
     <>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modals.RenameChannel')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -90,17 +92,17 @@ const ModalRenameChannel = () => {
               ref={inputRef}
             />
             <Form.Label htmlFor='name' className='visually-hidden'>
-              Имя канала
+              {t('modals.ChannelName')}
             </Form.Label>
 
             <div className='invalid-feedback'>{formik.errors.name}</div>
 
             <div className='d-flex justify-content-end'>
               <Button variant='secondary' type='button' className='me-2' disabled={formik.isSubmitting} onClick={handleClose}>
-                Отменить
+                {t('modals.Cancel')}
               </Button>
               <Button variant='primary' type='submit' disabled={formik.isSubmitting || !formik.values.name.length} onClick={formik.handleSubmit}>
-                Отправить
+                {t('modals.Send')}
               </Button>
             </div>
           </Form.Group>

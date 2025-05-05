@@ -25,8 +25,8 @@ const LoginForm = () => {
   }, []);
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Обязательное поле'),
-    password: Yup.string().required('Обязательное поле'),
+    username: Yup.string().required(t('forms.Required')),
+    password: Yup.string().required(t('forms.Required')),
   });
 
   const formik = useFormik({
@@ -46,11 +46,11 @@ const LoginForm = () => {
         navigate('/');
       } catch (e) {
         if (e.status === 401) {
-          setAuthError('Неверные имя пользователя или пароль');
+          setAuthError(t('forms.InvalidUsernameOrPassword'));
           return;
         }
 
-        toastError('Ошибка соединения');
+        toastError(t('NetworkError'));
         throw e;
       }
     },
@@ -58,14 +58,14 @@ const LoginForm = () => {
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <h1 className='text-center mb-4'>{t('Login')}</h1>
+      <h1 className='text-center mb-4'>{t('ToLogin')}</h1>
 
       <FloatingLabel className='mb-3'>
         <Form.Control
           type='text'
           name='username'
           id='username'
-          placeholder='Ваш ник'
+          placeholder={t('forms.YourNickname')}
           required
           isInvalid={authError}
           value={formik.values.username}
@@ -73,7 +73,7 @@ const LoginForm = () => {
           onChange={formik.handleChange}
           ref={inputRef}
         />
-        <Form.Label htmlFor='username'>Ваш ник</Form.Label>
+        <Form.Label htmlFor='username'>{t('forms.YourNickname')}</Form.Label>
       </FloatingLabel>
 
       <FloatingLabel className='mb-3'>
@@ -81,20 +81,20 @@ const LoginForm = () => {
           type='password'
           name='password'
           id='password'
-          placeholder='Пароль'
+          placeholder={t('forms.YourPassword')}
           required
           isInvalid={authError}
           value={formik.values.password}
           disabled={formik.isSubmitting}
           onChange={formik.handleChange}
         />
-        <Form.Label htmlFor='password'>Пароль</Form.Label>
+        <Form.Label htmlFor='password'>{t('forms.YourPassword')}</Form.Label>
 
         {authError ? <div className='invalid-tooltip'>{authError}</div> : null}
       </FloatingLabel>
 
       <Button type='submit' variant='outline-primary' className='w-100' disabled={formik.isSubmitting}>
-        Войти
+        {t('ToLogin')}
       </Button>
     </Form>
   );
