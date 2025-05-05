@@ -1,19 +1,14 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-
-import App from './components/App';
-import store from './slices/index';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const mountNode = document.getElementById('chat');
-const root = createRoot(mountNode);
+import app from './app';
 
-root.render(
-  <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </StrictMode>
-);
+const init = async () => {
+  const mountNode = document.getElementById('chat');
+  const root = createRoot(mountNode);
+
+  root.render(await app());
+};
+
+init();
