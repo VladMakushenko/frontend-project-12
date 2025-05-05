@@ -1,16 +1,16 @@
 class LocalStorage {
   getItem(key) {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
+    const item = localStorage.getItem(key)
+    return item ? JSON.parse(item) : null
   }
 
   setItem(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value))
   }
 
   removeItem(key) {
-    localStorage.removeItem(key);
+    localStorage.removeItem(key)
   }
 }
 
-export default new LocalStorage();
+export default new LocalStorage()

@@ -60,6 +60,6 @@ const ru = {
       ChannelHasBeenRenamed: 'Канал переименован',
     },
   },
-};
+}
 
-export default ru;
+export default ru

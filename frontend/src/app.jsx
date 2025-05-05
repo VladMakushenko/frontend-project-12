@@ -1,23 +1,23 @@
-import { Provider } from 'react-redux';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import { Provider } from 'react-redux'
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react'
 
-import i18next from 'i18next';
-import { I18nextProvider, initReactI18next } from 'react-i18next';
-import filter from 'leo-profanity';
+import i18next from 'i18next'
+import { I18nextProvider, initReactI18next } from 'react-i18next'
+import filter from 'leo-profanity'
 
-import App from './components/App';
-import store from './slices/index';
-import rollbarConfig from './rollbar';
+import App from './components/App'
+import store from './slices/index'
+import rollbarConfig from './rollbar'
 
-import resources from './locales/index';
+import resources from './locales/index'
 
 const app = async () => {
-  const dictionary = filter.getDictionary('ru');
-  filter.add(dictionary);
+  const dictionary = filter.getDictionary('ru')
+  filter.add(dictionary)
 
-  const defaultLanguage = 'ru';
+  const defaultLanguage = 'ru'
 
-  const i18n = i18next.createInstance();
+  const i18n = i18next.createInstance()
   await i18n.use(initReactI18next).init({
     resources,
     lng: defaultLanguage,
@@ -25,7 +25,7 @@ const app = async () => {
     interpolation: {
       escapeValue: false,
     },
-  });
+  })
 
   return (
     <RollbarProvider config={rollbarConfig}>
@@ -37,7 +37,7 @@ const app = async () => {
         </I18nextProvider>
       </ErrorBoundary>
     </RollbarProvider>
-  );
-};
+  )
+}
 
-export default app;
+export default app

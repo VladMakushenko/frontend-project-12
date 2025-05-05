@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   currentChannelId: 1,
@@ -8,26 +8,26 @@ const initialState = {
     type: null,
     extra: null,
   },
-};
+}
 
 const slice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
     setCurrentChannel(state, { payload }) {
-      state.currentChannelId = payload;
+      state.currentChannelId = payload
     },
     setModalVisibility(state, { payload }) {
-      state.modal.isOpened = payload;
+      state.modal.isOpened = payload
     },
     setModalType(state, { payload }) {
-      state.modal.type = payload;
+      state.modal.type = payload
     },
     setModalExtraParams(state, { payload }) {
-      state.modal.extra = payload;
+      state.modal.extra = payload
     },
   },
-});
+})
 
-export const { setCurrentChannel, setModalVisibility, setModalType, setModalExtraParams } = slice.actions;
-export default slice.reducer;
+export const { setCurrentChannel, setModalVisibility, setModalType, setModalExtraParams } = slice.actions
+export default slice.reducer

@@ -1,55 +1,55 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import LocalStorage from '../services/LocalStorage';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import LocalStorage from '../services/LocalStorage'
 
-import socket from '../socket';
+import socket from '../socket'
 
 export const channelsApi = createApi({
   reducerPath: 'channelsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/channels',
     prepareHeaders: (headers) => {
-      const token = LocalStorage.getItem('token');
+      const token = LocalStorage.getItem('token')
 
-      headers.set('Authorization', `Bearer ${token}`);
-      return headers;
+      headers.set('Authorization', `Bearer ${token}`)
+      return headers
     },
   }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getChannels: builder.query({
       query: () => '',
       async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
-        await cacheDataLoaded;
+        await cacheDataLoaded
 
         socket.on('newChannel', (newChannel) => {
           updateCachedData((draft) => {
-            draft.push(newChannel);
-          });
-        });
+            draft.push(newChannel)
+          })
+        })
 
         socket.on('removeChannel', ({ id }) => {
           updateCachedData((draft) => {
-            return draft.filter((channel) => channel.id !== id);
-          });
-        });
+            return draft.filter(channel => channel.id !== id)
+          })
+        })
 
         socket.on('renameChannel', ({ id, name }) => {
           updateCachedData((draft) => {
-            const channel = draft.find((channel) => channel.id === id);
+            const channel = draft.find(channel => channel.id === id)
             if (channel) {
-              channel.name = name;
+              channel.name = name
             }
-          });
-        });
+          })
+        })
 
-        await cacheEntryRemoved;
-        socket.removeAllListeners();
+        await cacheEntryRemoved
+        socket.removeAllListeners()
       },
     }),
     getChannelById: builder.query({
-      query: (id) => id,
+      query: id => id,
     }),
     addChannel: builder.mutation({
-      query: (channel) => ({
+      query: channel => ({
         method: 'POST',
         body: channel,
       }),
@@ -62,12 +62,12 @@ export const channelsApi = createApi({
       }),
     }),
     removeChannel: builder.mutation({
-      query: (id) => ({
+      query: id => ({
         url: id,
         method: 'DELETE',
       }),
     }),
   }),
-});
+})
 
-export const { useGetChannelsQuery, useGetChannelByIdQuery, useAddChannelMutation, useEditChannelMutation, useRemoveChannelMutation } = channelsApi;
+export const { useGetChannelsQuery, useGetChannelByIdQuery, useAddChannelMutation, useEditChannelMutation, useRemoveChannelMutation } = channelsApi

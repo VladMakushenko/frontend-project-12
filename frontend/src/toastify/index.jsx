@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 
 const defaultOptions = {
   position: 'top-right',
@@ -9,8 +9,8 @@ const defaultOptions = {
   draggable: true,
   progress: undefined,
   theme: 'light',
-};
+}
 
-export const toastSuccess = (body) => toast.success(body, defaultOptions);
+export const toastSuccess = body => toast.success(body, defaultOptions)
 
-export const toastError = (body) => toast.error(body, defaultOptions);
+export const toastError = body => toast.error(body, defaultOptions)
