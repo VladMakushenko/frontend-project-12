@@ -26,6 +26,7 @@ const MessagesHeader = () => {
       <p className="m-0">
         <b>
           #
+          {' '}
           {channel}
         </b>
       </p>

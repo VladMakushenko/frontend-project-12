@@ -56,7 +56,7 @@ const MessagesForm = () => {
 
   useEffect(() => {
     inputRef.current.focus()
-  }, [])
+  })
 
   return (
     <Form noValidate className="py-1 border rounded-2">
@@ -68,6 +68,7 @@ const MessagesForm = () => {
           placeholder={t('messages.TypeMessage')}
           className="border-0 p-0 ps-2"
           aria-label={t('messages.NewMessage')}
+          autoComplete="off"
           required
           isInvalid={formik.touched.body && formik.errors.body}
           value={formik.values.body}

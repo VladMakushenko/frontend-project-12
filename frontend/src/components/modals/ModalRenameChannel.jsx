@@ -85,6 +85,7 @@ const ModalRenameChannel = () => {
               id="name"
               name="name"
               className="mb-2"
+              autoComplete="off"
               required
               isInvalid={!!formik.errors.name}
               value={formik.values.name}

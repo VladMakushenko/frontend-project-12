@@ -81,6 +81,7 @@ const ModalAddChannel = () => {
               id="name"
               name="name"
               className="mb-2"
+              autoComplete="off"
               required
               isInvalid={formik.touched.name && formik.errors.name}
               value={formik.values.name}
